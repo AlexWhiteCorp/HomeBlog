@@ -1,0 +1,278 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{parts/head :: head(title='JuniorHills')}"></head>
+<style>
+    body{
+    }
+
+    .formDivTitle{
+        margin: -10px 0px 20px 0px;
+        filter: brightness(1.3);
+
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .formDiv{
+        position: absolute;
+        background: rgba(14, 23, 33, 0.4);
+        width: 300px;
+        max-width: 100%;
+        border: solid 2px #205b77;
+        padding: 45px 30px 30px 30px;
+        overflow: hidden;
+        box-shadow: 0px 0px 90px rgba(32, 91, 119, 0.25);
+
+        text-align: center;
+        font-size: 22px;
+        line-height: 28px;
+        white-space: nowrap;
+    }
+
+    .formDivLogo{
+        position: absolute;
+        z-index: 10;
+        background: #6788a8;
+        width: 50px;
+        height: 50px;
+        border: 2px solid #6788a8;
+        border-radius: 50px;
+        box-shadow: 0px 3px 45px rgba(32, 91, 119, 0.8);
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    .inputField{
+        background: #05121b;
+        width: 90%;
+        height: 30px;
+        margin: 0px 0px 20px 0px;
+        padding: 3px 10px 3px 10px;
+        border: solid 1.5px #205b77;
+        outline: none;
+
+        font-size: 17px;
+        color: #6788a8;
+        text-align: center;
+    }
+
+
+    .inputField::placeholder{
+        font-size: 14px;
+        color: #49647f;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+        -webkit-transition-delay: 9999s;
+    }
+
+    .errorMessage{
+        margin: 0px 0px 15px 0px;
+
+        color: #c73232;
+        text-align: center;
+    }
+
+    .inputButton{
+        background-color: rgba(20, 143, 25, 0.2);
+        width: 90%;
+        height: 30px;
+        margin: 0px 0px 20px 0;
+        padding: 3px 10px 3px 10px;
+        border: 2px solid #226625;
+        cursor: pointer;
+        filter: brightness(1.2);
+        outline: none;
+
+        font-size: 18px;
+        font-weight: bold;
+        color: #226625;
+        text-align: center;
+    }
+
+    .inputButton:hover{
+        filter: brightness(1.5);
+    }
+
+    .inviteCodeText{
+        width: fit-content;
+        margin: 0px 0px 10px 10px;
+        padding-bottom: 2px;
+        border-bottom: 1.5px dotted #49647f;
+        cursor: pointer;
+
+        text-align: left;
+        font-size: 14px;
+        line-height: 14px;
+    }
+
+    .inviteCodeText:hover{
+        filter: brightness(1.5);
+    }
+
+    .i-agree-div{
+        width: 90%;
+        margin: 0px 5% 15px 5%;
+
+        text-align: left;
+        font-size: 13px;
+        line-height: 24px;
+        white-space: normal;
+    }
+
+    .checkbox {
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+        margin: 10px 0 0 20px;
+    }
+
+    .checkbox + label:hover{
+        filter: brightness(1.5);
+    }
+
+    .checkbox + label {
+        position: relative;
+        padding: 0 0 0 40px;
+        cursor: pointer;
+    }
+    .checkbox + label:before {
+        content: '';
+        position: absolute;
+        top: -3px;
+        left: 0px;
+        width: 20px;
+        height: 20px;
+        border: solid 1.5px #205b77;
+        background: #05121b;
+        box-shadow: inset 0 2px 3px rgba(0,0,0,.2);
+    }
+
+    .checkbox:checked + label:before {
+        content: '\2714';
+
+        font-size: 22px;
+        color: #49647f;
+    }
+
+    @media screen and (max-width: 640px){
+        .formDiv{
+            background: rgba(14, 23, 33, 1);
+        }
+
+        .formDivLogo{
+            box-shadow: 0px 3px 50px #205b77;
+        }
+
+        .remember-me-div{
+            left: -8px;
+            top: 0px;
+        }
+
+        label{
+            font-size: 17px;
+        }
+    }
+</style>
+<body>
+<a href="/"><img src="/images/logo.png" alt="" id="formDivLogo" class="formDivLogo"></a>
+<div id="formDiv" class="formDiv">
+    <form th:action="@{/registration}" method="post" modelAttribute="restuser">
+        <div class="formDivTitle">Create Account</div>
+        <input id="email" class="inputField" name="email" type="email" placeholder="E-mail" spellcheck="false"><br>
+        <input id="nickname" class="inputField" name="nickname" type="text" placeholder="Nickname" spellcheck="false"><br>
+        <input id="password" class="inputField" name="password" type="password" placeholder="Password" spellcheck="false"><br>
+        <input id="password2" class="inputField" name="password2" type="password" placeholder="Confirm password" spellcheck="false"><br>
+        <div id="inviteCodeText" class="inviteCodeText">Have an invite code?</div>
+        <input id="inviteCode" class="inputField" name="invite" type="text" placeholder="Invite Code" spellcheck="false" style="margin: 0px 0px 0px 3px"><br>
+        <div class="i-agree-div">
+            <input type="checkbox" class="checkbox" id="checkbox"/>
+            <label for="checkbox" id="checkBoxText">
+                <div style="display: inline; margin-left: -10px">
+                    I accept the License Agreement and acknowledge that I have read and understood the Privacy Policy.
+                </div>
+            </label>
+        </div>
+        <div id="errorMessage" class="errorMessage" th:text="${error}"></div>
+        <input id="submit" class="inputButton" name="button" value="Create Account" type="submit">
+    </form>
+</div>
+<script type="text/javascript">
+    if(formDiv.offsetHeight > window.innerHeight)document.body.style.minHeight = formDiv.offsetHeight + 50 + 'px';
+    else document.body.style.minHeight = window.innerHeight + 'px';
+    document.body.style.minWidth = formDiv.offsetWidth + 4 + 'px';
+
+    formDiv = document.getElementById('formDiv');
+    formDiv.style.left = (document.body.offsetWidth - formDiv.offsetWidth) / 2 + 'px';
+    formDiv.style.top = (document.body.offsetHeight - formDiv.offsetHeight) / 2 + 'px';
+
+
+    formDivLogo = document.getElementById('formDivLogo');
+    formDivLogo.style.left = (document.body.offsetWidth - formDivLogo.offsetWidth) / 2 + 'px';
+    formDivLogo.style.top = (document.body.offsetHeight - formDiv.offsetHeight - formDivLogo.offsetHeight) / 2 + 'px';
+
+
+    email = document.getElementById('email');
+    nickname = document.getElementById('nickname');
+    password = document.getElementById('password');
+    password2 = document.getElementById('password2');
+    accept = document.getElementById('checkbox');
+    if(document.referrer != 'http://localhost:8787/login') localStorage.setItem('url', document.referrer);
+
+    if(localStorage.getItem('registration_email') != null) email.value = localStorage.getItem('registration_email');
+    if(localStorage.getItem('nickname') != null) nickname.value = localStorage.getItem('nickname');
+
+    document.getElementById('submit').onclick = function(){
+        if(email.value == '') {
+            document.getElementById('errorMessage').innerText = 'Enter your E-mail, please!';
+            return false;
+        }
+        localStorage.setItem('registration_email', email.value);
+        if(nickname.value == '') {
+            document.getElementById('errorMessage').innerText = 'Enter your Nickname, please!';
+            return false;
+        }
+        localStorage.setItem('nickname', nickname.value);
+        if(password.value == ''){
+            document.getElementById('errorMessage').innerText = 'Enter your Password, please!';
+            return false;
+        }
+        if(password2.value == ''){
+            document.getElementById('errorMessage').innerText = 'Confirm your Password, please!';
+            return false;
+        }
+        if(password.value != password2.value){
+            document.getElementById('errorMessage').innerText = 'Passwords don\'t match!';
+            return false;
+        }
+        if(!accept.checked){
+            document.getElementById('checkBoxText').style.color = '#c73232';
+            return false;
+        }
+        return true;
+    }
+
+    showIniteCodeField = false;
+    document.getElementById('inviteCode').style.display = 'none';
+
+    document.getElementById('inviteCodeText').onclick = function(){
+        if(!showIniteCodeField){
+            document.getElementById('inviteCode').style.display = 'block';
+            showIniteCodeField = true;
+        }
+        else{
+            document.getElementById('inviteCode').style.display = 'none';
+            showIniteCodeField = false;
+        }
+    }
+
+    accept.onclick = function(){
+        document.getElementById('checkBoxText').style.color = '#49647f';
+    }
+</script>
+</body>
+</html>

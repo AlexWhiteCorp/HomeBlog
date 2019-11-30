@@ -1,0 +1,87 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{parts/head :: head(title='Home Blog')}"></head>
+<style>
+    .sidebar-left{
+        float: left;
+        width: 20% ;
+    }
+
+    .content{
+        float: left;
+        width: 65%;
+        padding: 0px 0px 0px 0px;
+    }
+
+
+
+    .workspace{
+        float: left;
+        margin: 0px 15px 0px 15px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .workspace-bar-menu{
+        background: #90ee90;
+        min-height: 30px;
+        max-height: 30px;
+        border: 1px solid #193e19;
+
+        font-size: 24px;
+        line-height: 30px;
+        color: #055f24;
+        text-align: right;
+    }
+
+    .workspace-bar-menu-title{
+        float: left;
+        width: fit-content;
+        margin: 0px 0px 0px 10px;
+
+        font-size: 18px;
+        line-height: 30px;
+        font-weight: bold;
+    }
+
+    .workspace-bar-menu-buttons{
+        float: right;
+        width: fit-content;
+    }
+
+    .workspace-bar-menu-button{
+        float: right;
+        width: fit-content;
+        min-width: 30px;
+        height: 30px;
+        padding: 0px 5px 0px 5px;
+        border-left: 1px solid #193e19;
+        cursor: pointer;
+
+        text-align: center;
+        font-size: 18px;
+        line-height: 30px;
+        font-weight: bold;
+    }
+
+    .workspace-body{
+        height: 100%;
+        border: 2px solid #226625;
+        border-top: none;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        padding-top: 5px;
+    }
+
+</style>
+<style>
+    @media screen and (max-width: 640px) {
+
+    }
+</style>
+<body>
+    <script src="/scripts/api.js"></script>
+    <div id="admin"></div>
+    <script src="admin.bundle.js"></script>
+</body>
+</html>

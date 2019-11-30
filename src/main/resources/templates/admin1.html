@@ -1,0 +1,544 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{parts/head :: head(title='Home Blog')}"></head>
+<style>
+    .sidebar-left{
+        float: left;
+        width: 20% ;
+    }
+
+    .content{
+        float: left;
+        width: 65%;
+        padding: 0px 0px 0px 0px;
+    }
+
+    .explorer{float: left;
+        width: 100%;
+        margin: 0px 0px 0px 5px;
+
+        text-align: center;
+    }
+
+    .explorer-title{
+        background: #90ee90;
+        min-height: 30px;
+        max-height: 30px;
+        border: 1px solid #193e19;
+
+        font-size: 24px;
+        line-height: 30px;
+        color: #055f24;
+    }
+
+    .explorer-content{
+        height: 100%;
+        border: 2px solid #226625;
+        border-top: none;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        padding-top: 5px;
+
+        text-align: left;
+    }
+
+    .explorer-option{
+        width: fit-content;
+        margin: 5px 0px 5px 20px;
+        cursor: pointer;
+
+        font-size: 18px;
+    }
+
+    .nodes{
+        display: none;
+    }
+
+    .workspace{
+        float: left;
+        margin: 0px 15px 0px 15px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .workspace-bar-menu{
+        background: #90ee90;
+        min-height: 30px;
+        max-height: 30px;
+        border: 1px solid #193e19;
+
+        font-size: 24px;
+        line-height: 30px;
+        color: #055f24;
+        text-align: right;
+    }
+
+    .workspace-body{
+        height: 100%;
+        border: 2px solid #226625;
+        border-top: none;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        padding-top: 5px;
+    }
+
+    .bar-menu-title{
+        float: left;
+        margin: 0px 10px 0px 10px;
+
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .bar-menu-button{
+        float: right;
+        padding: 0px 7px 0px 7px;
+        border-left: 1px solid #193e19;
+        cursor: pointer;
+
+        font-size: 14px;
+    }
+
+    #option-template{
+        display: none;
+    }
+
+    .nodes{
+        display: none;
+    }
+
+    .posts-crud-bar-menu{
+    }
+
+    .posts-crud{
+        color: #193e19;
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    .input-field-div{
+        width: 100%;
+        margin: 10px 0px 10px 35px;
+
+        text-align: left;
+    }
+
+    .inputField{
+        float: left;
+        background: #90ee90;
+        height: 20px;
+        width: 80%;
+        padding: 3px 10px 3px 10px;
+        border: 1px solid #226625;
+        border-radius: 3px;
+        outline: none;
+
+        color: #193e19;
+        font-size: 16px;
+        line-height: 20px;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .label{
+        float: left;
+        min-width: 10%;
+        margin: 0px 15px 0px 0px;
+
+        text-align: right;
+    }
+
+    #posts-crud-id-div{
+    }
+
+    #posts-crud-id{
+        width: 45px;
+        text-align: right;
+    }
+
+    #posts-crud-textarea{
+        float: none;
+        min-width: 88%;
+        min-height: 175px;
+        margin-left: 3%;
+        resize: none;
+        border-radius: 0px;
+    }
+
+    .textbox-field{
+        float: none;
+        min-width: 88%;
+        min-height: 175px;
+        margin-left: 3%;
+        resize: none;
+        border-radius: 0px;
+    }
+
+    .textarea-menu{
+        float: left;
+        background: #4dc44d;
+        min-width: 90%;
+        min-height: 30px;
+        margin: 10px 0px 0px 3%;
+        border: 1px solid #193e19;
+    }
+
+    .textarea-menu-button{
+        float: right;
+        min-width: 20px;
+        height: 100%;
+        border-left: 2px solid #193e19;
+        padding: 0px 5px 0px 5px;
+        cursor: pointer;
+
+        text-align: center;
+        font-size: 16px;
+        line-height: 30px;
+        font-weight: bold;
+    }
+
+    .textarea-menu-button:hover{
+        background: #90ee90;
+    }
+
+    .textarea-menu-img{
+        height: 30px;
+    }
+
+</style>
+<style>
+    @media screen and (max-width: 640px) {
+
+    }
+</style>
+<body>
+    <div id="admin">
+        <desktop-header/>
+    </div>
+    <script src="http://localhost:8000/admin.js"></script>
+    <div class="row">
+        <div id="sidebar-left" class="sidebar-left">
+            <div id="in-sidebar-left" class="in-sidebar-left">
+                <div id="explorer" class="explorer">
+                    <div id="explorer-title" class="explorer-title"><strong>Меню</strong></div>
+                    <div id="explorer-content" class="explorer-content"></div>
+                </div>
+            </div>
+        </div>
+        <div id="content" class="content">
+            <div id="in-content" class="in-content">
+                <div id="workspace" class="workspace">
+                    <div id="workspace-bar-menu" class="workspace-bar-menu">
+                        <div id="bar-menu-title" class="bar-menu-title">Панель Адміністратора</div>
+                        <div id="posts-crud-bar-menu" class="posts-crud-bar-menu">
+                            <div id="bar-menu-close-button" class="bar-menu-button" >✖</div>
+                            <div id="bar-menu-delete-button" class="bar-menu-button">Видалити</div>
+                            <div id="bar-menu-change-button" class="bar-menu-button">Змінити</div>
+                            <div id="bar-menu-open-button" class="bar-menu-button">Відкрити</div>
+                            <div id="bar-menu-add-button" class="bar-menu-button">Додати</div>
+                            <div id="bar-menu-update-button" class="bar-menu-button">Оновити</div>
+                        </div>
+                    </div>
+                    <div id="workspace-body" class="workspace-body">
+                        <div id="posts-crud" class="posts-crud">
+                            <div id="posts-crud-add">
+                                <div id="posts-crud-id-div" class="input-field-div row">
+                                    <div class="label">ID:</div>
+                                    <input id="posts-crud-id" class="inputField" type="text" spellcheck="false" autocomplete="off" readonly>
+                                </div>
+                                <div id="posts-crud-topic-div" class="input-field-div row">
+                                    <div class="label">Категорія:</div>
+                                    <input id="posts-crud-topic" class="inputField" type="text" value="plants" spellcheck="false" autocomplete="off" readonly>
+                                </div>
+                                <div id="posts-crud-title-div" class="input-field-div row">
+                                    <div class="label">Заголовок:</div>
+                                    <input id="posts-crud-title" class="inputField" type="text" spellcheck="false" autocomplete="off" placeholder="заголовок статті">
+                                </div>
+                                <div id="posts-crud-tags-div" class="input-field-div row">
+                                    <div class="label">Теги:</div>
+                                    <input id="posts-crud-tags" class="inputField" type="text" spellcheck="false" autocomplete="off" placeholder="наприклад: #бісер, #ікони">
+                                </div>
+                                <div id="posts-crud-preview-div" class="input-field-div row">
+                                    <div class="label">Прев'ю:</div>
+                                    </div>
+                                <div id="posts-crud-text-div" class="input-field-div row">
+                                    <div class="label">Текст:</div>
+                                </div>
+                            </div>
+                            <div id="posts-crud-save-button">Зберегти</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="option-template">
+            <div id="#name-option-div" class="explorer-option">
+                <div id="#name-option" class="explorer-option-title">▶ #title</div>
+                <div id="#name-option-nodes" class="nodes"></div>
+            </div>
+        </div>
+        <div id="textbox-template" hidden>
+                <div id="#id-textbox-menu" class="textarea-menu">
+                    <div id="#id-minus-button" class="textarea-menu-button">-</div>
+                    <div id="#id-plus-button" class="textarea-menu-button">+</div>
+                    <img id="#id-triple-img-button" src="/images/icons/triple-img.png" alt="" class="textarea-menu-img textarea-menu-button">
+                    <img id="#id-double-img-button" src="/images/icons/double-img.png" alt="" class="textarea-menu-img textarea-menu-button">
+                    <img id="#id-big-img-button" src="/images/icons/big-img.png" alt="" class="textarea-menu-img textarea-menu-button">
+                    <div id="#id-link-button" class="textarea-menu-button">A</div>
+                </div>
+                <textarea id="#id-textbox-field" class="inputField textbox-field scroll" type="text" spellcheck="false" autocomplete="off" placeholder="#placeholder"></textarea>
+        </div>
+        <div id="big-img-template"><img src="/images/posts/#topic/#id/#name1" alt="" class="big-img">
+</div>
+        <div id="double-img-template"><div class="double-img">
+    <img src="/images/posts/#topic/#id/#name1" alt="" class="double-img-first">
+    <img src="/images/posts/#topic/#id/#name2" alt="" class="double-img-second">
+</div>
+</div>
+        <div id="triple-img-template"><div class="triple-img">
+    <img src="/images/posts/#topic/#id/#name1" alt="" class="triple-img-first">
+    <img src="/images/posts/#topic/#id/#name2" alt="" class="triple-img-second">
+    <img src="/images/posts/#topic/#id/#name3" alt="" class="triple-img-third">
+</div>
+</div>
+        <div id="link-template" class="link"><a href="Адрес посилання">Текст</a>
+</div>
+    </div>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/scripts/classes/TextBox.js"></script>
+    <script type="text/javascript">
+        var TextBox = function (el, id) {
+            this.id = id;
+            this.self = this;
+
+            el.innerHTML += document.getElementById('textbox-template').innerHTML.replace(/#id/g, id);
+
+            this.getMenu = function(){
+                return document.getElementById(this.id + '-textbox-menu');
+            }
+
+            this.getField = function(){
+                return document.getElementById(this.id + '-textbox-field');
+            }
+
+            this.function = function addTemplate(type, names){
+                let l = box.value.length;
+                let ss = box.selectionStart;
+                box.value = box.value.substring(0, box.selectionStart) +
+                    document.getElementById(type + '-template').innerHTML.replace(/#topic/g, document.getElementById('posts-crud-topic').value)
+                        .replace(/#id/g, document.getElementById('posts-crud-id').value)
+                        .replace(/#name1/g, names[0]).replace(/#name2/g, names[1]).replace(/#name3/g, names[2]) +
+                    box.value.substring(box.selectionStart, l);
+                l = box.value.length - l;
+                box.selectionStart = ss + l;
+                box.selectionEnd = ss + l;
+                box.focus();
+            }
+
+            document.getElementById(id + '-minus-button').onclick = function(){
+                this.getField().style.minHeight = '175px';
+            }
+            document.getElementById(id + '-plus-button').onclick = function(){
+                this.getField().style.minHeight = '450px';
+
+            }
+            document.getElementById(id + '-triple-img-button').onclick = function(){
+                addTemplate('triple-img', ['name1', 'name2', 'name3']);
+                return false;
+            }
+            document.getElementById(id + '-double-img-button').onclick = function(){
+                addTemplate('double-img', ['name1', 'name2']);
+                return false;
+            }
+            document.getElementById(id + '-big-img-button').onclick = function(){
+                addTemplate('big-img', ['name1']);
+                return false;
+            }
+            document.getElementById(id + '-link-button').onclick = function(){
+                addTemplate('link', ['', '', '']);
+                return false;
+            }
+
+        }
+
+        var topics = [];
+        topics[0] = ['school', 'plants', 'create'];
+        topics[1] = ['Школа', 'Вазони', 'Творчість'];
+        var Options = new Map();
+
+        var PostsCRUD = function(){
+            var postCRUD = this;
+
+            this.barMenu = document.getElementById('posts-crud-bar-menu');
+            this.div = document.getElementById('posts-crud');
+
+            this.updateButton = document.getElementById('bar-menu-update-button');
+            this.addButton = document.getElementById('bar-menu-add-button');
+            this.openButton = document.getElementById('bar-menu-open-button');
+            this.changeButton = document.getElementById('bar-menu-change-button');
+            this.deleteButton = document.getElementById('bar-menu-delete-button');
+            this.closeButton = document.getElementById('bar-menu-close-button');
+
+            this.saveButton = document.getElementById('posts-crud-save-button');
+
+            this.addBox = document.getElementById('posts-crud-add');
+            this.idField = document.getElementById('posts-crud-id');
+            this.topicField = document.getElementById('posts-crud-topic');
+            this.titleField = document.getElementById('posts-crud-title');
+            this.tagsField = document.getElementById('posts-crud-tags');
+            this.previewTextBox = new TextBox(this.addBox, 'preview');
+            this.textTextBox = new TextBox(this.addBox, 'text');
+
+            this.setId = function() {
+                if(sessionStorage.getItem('postsState') != null){
+                    idField.removeAttribute('readonly');
+                    idField.value = parseInt(JSON.parse(sessionStorage.getItem('postsState'))[this.topicField.value]) + 1;
+                }
+                else{
+                    loadState(function () {
+                        document.getElementById('posts-crud-id').removeAttribute('readonly');
+                        document.getElementById('posts-crud-id').value = parseInt(JSON.parse(sessionStorage.getItem('postsState'))[this.topicField.value]) + 1;
+                    });
+                }
+            }
+
+            this.getId = function(){
+                return idField.value;
+            }
+            this.getTopic = function(){
+                return document.getElementById('posts-crud-topic').value;
+            }
+            this.getTags = function(){
+                return document.getElementById('posts-crud-tags').value;
+            }
+            this.getTitle = function(){
+                return document.getElementById('posts-crud-title').value;
+            }
+
+            this.saveButton.onclick = function(){
+                alert(TB.getField().value);
+                $.ajax({
+                    url : '/admin/posts/add',
+                    datatype : 'json',
+                    type : "get",
+                    contentType : "application/json",
+                    data : {
+                        'id' : postCRUD.getId,
+                        'topic': postCRUD.getTopic,
+                        'title': postCRUD.getTitle,
+                        'tags': postCRUD.getTags,
+                        'preview': postCRUD.previewTextBox.box.value,
+                        'text': postCRUD.textTextBox.box.value
+                    },
+                    success : function(data) {
+                        alert(data.text);
+                    }
+                });
+            }
+        }
+        var TB = new TextBox(document.body, 'test');
+
+
+        var postCrud = new PostsCRUD();
+        idField = document.getElementById('posts-crud-id');
+        idField.removeAttribute('readonly');
+        idField.value = 4 + 1;
+
+        var optionTemplate = document.getElementById('option-template');
+
+        var Explorer = function () {
+            this.div = document.getElementById('explorer');
+            this.body = document.getElementById('explorer-content');
+
+            this.options = [];
+
+            this.addOption = function(option){
+                this.options[this.options.length] = option;
+            }
+        };
+
+        var Option = function(parentNodesDiv, name, title){
+            var option = this;
+            this.name = name;
+
+            parentNodesDiv.innerHTML += optionTemplate.innerHTML.replace(/#name/g, name).replace(/#title/g, title);
+
+            this.div = document.getElementById(name + '-option-div');
+            this.title = document.getElementById(name + '-option');
+            this.nodesDiv = document.getElementById(name + '-option-nodes');
+
+            this.nodes = [];
+
+            this.isOpen = false;
+
+            this.addNewNode = function(name, title){
+                this.nodes[this.nodes.length] = new Option(this.nodesDiv, name, title);
+            }
+
+            Options.set(name + '-option-div', option);
+
+            this.handler = function () {
+                title = document.getElementById(option.name + '-option');
+                if(!option.isOpen){
+                    option.isOpen = true;
+                    if(option.nodes.length != 0){
+                        option.nodesDiv.style.display = 'block';
+                        title.innerText = title.innerText.replace('▶', '▼');
+                        title.style.marginLeft = '-3px';
+                    }
+                    else{
+                        title.innerText = title.innerText.replace('▶', '');
+                        title.style.marginLeft = '19px';
+                    }
+                }
+                else{
+                    option.isOpen = false;
+                    if(option.nodes.length != 0){
+                        option.nodesDiv.style.display = 'none';
+                        title.innerText = title.innerText.replace('▼', '▶');
+                    }
+                    else{
+                        title.innerText = '▶ ' + title.innerText;
+                    }
+                    title.style.marginLeft = '0px';
+                }
+            }
+        }
+
+        var WorkSpace = function(){
+            this.div = document.getElementById('workspace');
+            this.barMenu = document.getElementById('workspace-bar-menu');
+            this.body = document.getElementById('workspace-body');
+            this.title = document.getElementById('bar-menu-title');
+
+            this.setTitle = function(title) {
+                this.title.innerText = title;
+            }
+        };
+
+
+        document.body.style.minHeight = window.innerHeight - 50 + 'px';
+        document.getElementsByClassName('desktop-header-logo-div')[0].style.position = 'absolute';
+
+        var explorer = new Explorer();
+        explorer.body.style.minHeight = document.body.offsetHeight - 80 + 'px';
+        explorer.addOption(new Option(explorer.body, 'posts', 'Статті'));
+        for(i = 0; i < topics[0].length; i++){
+            explorer.options[0].addNewNode(topics[0][i], topics[1][i]);
+        }
+
+        var workspace = new WorkSpace();
+        workspace.body.style.minHeight = explorer.body.offsetHeight - 5 + 'px';
+        workspace.body.style.maxHeight = explorer.body.offsetHeight - 5 + 'px';
+
+        var opts = document.getElementsByClassName('explorer-option');
+        for(i = 0; i < opts.length - 1; i++){
+            opts[i].onclick = function(event){
+                Options.get(this.getAttribute('id')).handler();
+                event.stopPropagation();
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{parts/head :: head(title='Home Blog')}"></head>
+<style>
+
+</style>
+<style>
+    @media screen and (max-width: 640px) {
+
+    }
+</style>
+<body>
+    <div th:replace="~{parts/header :: header}"></div>
+    <div class="row">
+        <div id="content" class="content">
+            <div id="in-content" class="in-content">
+                <div id="app"></div>
+            </div>
+        </div>
+        <div id="sidebar-right" class="sidebar-right">
+            <div id="in-sidebar-right" class="in-sidebar-right">Right</div>
+        </div>
+        <script type="text/javascript">
+            var content = document.getElementById('content');
+            var sidebarRight = document.getElementById('sidebar-right');
+
+            minHeight = windowSize.height - header.offsetHeight - 30 + 'px';
+
+            document.getElementById('in-content').style.minHeight = minHeight;
+            document.getElementById('sidebar-right').style.width =
+                windowSize.width - document.getElementById('content').offsetLeft - document.getElementById('content').offsetWidth - 20 + 'px';
+            document.getElementById('in-sidebar-right').style.minHeight = minHeight;
+        </script>
+    </div>
+    <script src="main.bundle.js"></script>
+</body>
+</html>

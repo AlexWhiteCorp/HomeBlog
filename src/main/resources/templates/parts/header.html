@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="header">
+        <div id="desktop-header" class="desktop-header row">
+            <div class="desktop-header-left">
+                <strong class="desktop-header-title" style="color: #055f24">Home</strong>
+                <strong class="desktop-header-title" style="color: #557112">Blog</strong>
+            </div>
+            <div class="desktop-header-center"></div>
+            <div id="desktop-header-right" class="desktop-header-right">
+                <div th:if="${session.nickname}" id="header-right-user" class="row">
+                    <img id="user-icon" src="/images/icons/user.png" alt="" class="desktop-header-user-icon">
+                    <strong id="nickname" class="desktop-header-user-text" th:text="${'Вітаю, ' + session.nickname + '!'}"></strong>
+                </div>
+                <div th:unless="${session.nickname}">
+                    <a href="/login" class="authorityLink">Ввійти </a>
+                    <div style="display: inline">|</div>
+                    <a href="/registration" class="authorityLink">Зареєструватися</a>
+                </div>
+            </div>
+        </div>
+        <div id="desktop-bar-menu" class="desktop-bar-menu">
+            <div class="desktop-bar-menu-logo-div">
+                <a href="/"><img src="/images/logo.png" alt="" class="desktop-bar-menu-logo-img"></a>
+            </div>
+            <div class="desktop-bar-menu-option">
+                <img src="/images/icons/plant-pot.png" alt="" class="desktop-bar-menu-option-img">
+                <div class="desktop-bar-menu-option-text">Вишивка</div>
+            </div>
+            <div class="desktop-bar-menu-option" >
+                <a href="/topic/plants">
+                    <img src="/images/icons/plant-pot.png" alt="" class="desktop-bar-menu-option-img">
+                    <div class="desktop-bar-menu-option-text">Вазони</div>
+                </a>
+            </div>
+            <div class="desktop-bar-menu-option">
+                <img src="/images/icons/plant-pot.png" alt="" class="desktop-bar-menu-option-img">
+                <div class="desktop-bar-menu-option-text">Школа</div>
+            </div>
+            <div class="desktop-bar-menu-option">
+                <img src="/images/icons/plant-pot.png" alt="" class="desktop-bar-menu-option-img">
+                <div class="desktop-bar-menu-option-text">Вишивка</div>
+            </div>
+            <div class="desktop-bar-menu-option">
+                <img src="/images/icons/plant-pot.png" alt="" class="desktop-bar-menu-option-img">
+                <div class="desktop-bar-menu-option-text">Вазони</div>
+            </div>
+        </div>
+        <div th:if="${session.nickname}" id="user-popup-container" class="popup-container">
+            <div class="popup-container-header row">
+                <img class="popup-container-user-icon" src="/images/icons/user.png" alt="">
+                <div class="popup-container-user-name" th:text="${session.nickname}">Nickname</div>
+                <div id="user-popup-container-close-button" class="popup-container-close-button">×</div>
+            </div>
+            <div id="user-popup-container-item-1" class="popup-container-item"><a href="">• &nbsp;Мій акаунт</a></div>
+            <div id="user-popup-container-item-2" class="popup-container-item"><a href="/admin">• &nbsp;Адмін Панель</a></div>
+            <div id="user-popup-container-item-exit" class="popup-container-item">• &nbsp;Exit
+                <form id="logoutForm" th:action="@{/logout}" method="post" hidden="true">
+                    <input hidden type="submit" value="Sign Out"/>
+                </form>
+            </div>
+        </div>
+        <script type="text/javascript">
+            document.getElementById('user-popup-container-item-exit').onclick = function(){
+                document.getElementById('logoutForm').submit();
+                return false;
+            }
+            desktopHeader = document.getElementById('desktop-header');
+            userPopupContainer = document.getElementById('user-popup-container');
+
+            var showingUserPopupContainer = false;
+            var userPopupContainerHeight = userPopupContainer.offsetHeight;
+
+            userPopupContainer.style.top = '-2px';
+            userPopupContainer.style.left = window.innerWidth - userPopupContainer.offsetWidth - 10 + 'px';
+            userPopupContainer.style.display = 'none';
+
+
+            document.getElementById('header-right-user').onclick = showUserPopupContainer;
+            document.getElementById('user-popup-container-close-button').onclick = hideUserPopupContainer;
+
+            function showUserPopupContainer() {
+                if(!showingUserPopupContainer){
+                    showingUserPopupContainer = true;
+
+                    userPopupContainer.style.display = 'block';
+                    var timer = setInterval(function() {
+                        userPopupContainer.style.minHeight = userPopupContainer.offsetHeight + 5 + 'px';
+                        userPopupContainer.style.maxHeight = userPopupContainer.offsetHeight + 5 + 'px';
+                        if(userPopupContainer.offsetHeight >= userPopupContainerHeight){
+                            userPopupContainer.style.minHeight = userPopupContainerHeight + 'px';
+                            userPopupContainer.style.maxHeight = userPopupContainerHeight + 'px';
+                            clearInterval(timer);
+                            window.onclick = function(e){
+                                e = e || window.event;
+                                if(getClickedElement(e).indexOf('user-popup-container') < 0){
+                                    hideUserPopupContainer();
+                                    window.onclick = null;
+                                }
+                            }
+                        }
+                    }, 5);
+                }
+
+                return false;
+            }
+
+            function hideUserPopupContainer() {
+                if(showingUserPopupContainer){
+                    showingUserPopupContainer = false;
+                    var timer = setInterval(function() {
+                        userPopupContainer.style.minHeight = userPopupContainer.offsetHeight - 40 + 'px';
+                        userPopupContainer.style.maxHeight = userPopupContainer.offsetHeight - 40 + 'px';
+                        if(userPopupContainer.offsetHeight <= 60){
+                            userPopupContainer.style.display = 'none';
+                            userPopupContainer.style.minHeight = '60px';
+                            userPopupContainer.style.maxHeight = '60px';
+                            clearInterval(timer);
+                        }
+                    }, 5);
+                }
+                return false;
+            }
+
+            function getClickedElement(e){
+                if (navigator.userAgent.match('MSIE') || navigator.userAgent.match('Gecko')) {
+                    var elem = document.elementFromPoint(e.clientX,e.clientY);
+                } else {
+                    var elem = document.elementFromPoint(e.pageX,e.pageY);
+                }
+                return elem.id;
+            }
+
+        </script>
+        <script type="text/javascript">
+            var windowSize = {
+                width: window.innerWidth,
+                height: window.innerHeight
+            };
+            document.body.style.minHeight = windowSize.height + 'px';
+            var header = document.getElementById('desktop-header')
+        </script>
+    </div>
+</body>
+</html>

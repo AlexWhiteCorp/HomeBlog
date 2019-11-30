@@ -1,0 +1,252 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{parts/head :: head(title='Home Blog')}"></head>
+<style>
+    .formDivTitle{
+        margin: -10px 0px 20px 0px;
+        filter: brightness(1.3);
+
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .formDiv{
+        position: absolute;
+        width: 300px;
+        max-width: 100%;
+        border: solid 2px #205b77;
+        padding: 45px 30px 30px 30px;
+        overflow: hidden;
+        box-shadow: 0px 0px 90px rgba(32, 91, 119, 0.25);
+
+        font-size: 22px;
+        line-height: 28px;
+        white-space: nowrap;
+    }
+
+    .formDivLogo{
+        position: absolute;
+        z-index: 10;
+        background: #6788a8;
+        width: 50px;
+        height: 50px;
+        border: 2px solid #6788a8;
+        border-radius: 50px;
+        box-shadow: 0px 3px 45px rgba(32, 91, 119, 0.8);
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    .inputField{
+        background: #05121b;
+        width: 90%;
+        height: 30px;
+        margin: 0px 0px 20px 0px;
+        padding: 3px 10px 3px 10px;
+        border: solid 1.5px #205b77;
+        outline: none;
+
+        font-size: 17px;
+        color: #6788a8;
+        text-align: center;
+    }
+
+
+    .inputField::placeholder{
+        font-size: 14px;
+        color: #49647f;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+        -webkit-transition-delay: 9999s;
+    }
+
+    .errorMessage{
+        margin: 0px 0px 15px 0px;
+
+        color: #c73232;
+        text-align: center;
+    }
+
+    .inputButtonDiv{
+        float: left;
+        width: 50%;
+
+        text-align: center;
+    }
+
+    .inputButton{
+        background-color: rgba(20, 143, 25, 0.2);
+        width: 90%;
+        height: 30px;
+        margin: 0px 0px 20px 0;
+        padding: 3px 10px 3px 10px;
+        border: 2px solid #226625;
+        cursor: pointer;
+        filter: brightness(1.2);
+        outline: none;
+
+        font-size: 18px;
+        font-weight: bold;
+        color: #226625;
+        text-align: center;
+    }
+
+    .inputButton:hover{
+        filter: brightness(1.5);
+    }
+
+    .remember-me-div{
+        position: relative;
+        top: 2px;
+        left: -4px;
+        float: right;
+        width: 50%;
+
+        text-align: center;
+        font-size: 18px;
+    }
+
+    .checkbox {
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+        margin: 10px 0 0 20px;
+    }
+
+    .checkbox + label:hover{
+        filter: brightness(1.5);
+    }
+
+    .checkbox + label {
+        position: relative;
+        padding: 0 0 0 60px;
+        cursor: pointer;
+    }
+    .checkbox + label:before {
+        content: '';
+        position: absolute;
+        top: -1px;
+        left: 20px;
+        width: 20px;
+        height: 20px;
+        border: solid 1.5px #205b77;
+        background: #05121b;
+        box-shadow: inset 0 2px 3px rgba(0,0,0,.2);
+    }
+
+    .checkbox:checked + label:before {
+        content: '\2714';
+
+        font-size: 22px;
+        color: #49647f;
+    }
+
+    .underline{
+        float: left;
+        background: #205b77;
+        min-width: 40%;
+        min-height: 1px;
+        margin: 15px 5% 0px 5%;
+    }
+
+    .additional-hrefs{
+        float: left;
+        width: 44%;
+        margin: 15px 3% 0px 3%;
+        filter: brightness(1.25);
+
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .additional-hrefs:hover{
+        filter: brightness(1.5);
+        font-size: 19px;
+    }
+
+    @media screen and (max-width: 640px){
+        .formDiv{
+            background: rgba(14, 23, 33, 1);
+        }
+
+        .formDivLogo{
+            box-shadow: 0px 3px 50px #205b77;
+        }
+
+        .remember-me-div{
+            left: -8px;
+            top: 0px;
+        }
+
+        label{
+            font-size: 17px;
+        }
+    }
+</style>
+<body>
+<a href="/"><img src="/images/logo.png" alt="" id="formDivLogo" class="formDivLogo"></a>
+<div id="formDiv" class="formDiv">
+    <form th:action="@{/login}" method="post" modelAttribute="restuser">
+        <div class="formDivTitle">Log in</div>
+        <input id="email" class="inputField" name="email" type="email" placeholder="E-mail" spellcheck="false" th:value="${email}"><br>
+        <input id="password" class="inputField" name="password" type="password" placeholder="Password" spellcheck="false"><br>
+        <div id="errorMessage" class="errorMessage" th:text="${error}"></div>
+        <div class="row">
+            <div class="inputButtonDiv">
+                <input id="submit" class="inputButton" name="button" value="Login" type="submit">
+            </div>
+            <div class="remember-me-div">
+                <input type="checkbox" class="checkbox" id="checkbox" />
+                <label for="checkbox"><div style="display: inline; margin-left: -10px">Remember Me</div></label>
+            </div>
+        </div>
+        <div class="row" style="width: 100%">
+            <div id="left-underline" class="underline"></div>
+            <div id="right-underline" class="underline"></div>
+        </div>
+        <div class="row">
+            <div class="additional-hrefs"><a href="/registration">Create Account</a></div>
+            <div class="additional-hrefs"><a href="/">Recover Account</a></div>
+        </div>
+        <input id="previousPage" type="text" hidden>
+    </form>
+</div>
+<script type="text/javascript">
+    document.body.style.minHeight = formDiv.offsetHeight + 50 + 'px';
+
+    formDiv = document.getElementById('formDiv');
+    formDiv.style.maxWidth = document.body.offsetWidth - 4 + 'px';
+    formDiv.style.left = (window.innerWidth - formDiv.offsetWidth) / 2 + 'px';
+    formDiv.style.top = (window.innerHeight - formDiv.offsetHeight) / 2 + 'px';
+
+
+    formDivLogo = document.getElementById('formDivLogo');
+    formDivLogo.style.left = (window.innerWidth - formDivLogo.offsetWidth) / 2 + 'px';
+    formDivLogo.style.top = (window.innerHeight - formDiv.offsetHeight - formDivLogo.offsetHeight) / 2 + 'px';
+
+    email = document.getElementById('email');
+    password = document.getElementById('password');
+    if(document.referrer != 'http://localhost:8787/login') localStorage.setItem('url', document.referrer);
+
+    if(email.valu != '' && localStorage.getItem('email') != null) email.value = localStorage.getItem('email');
+
+    document.getElementById('submit').onclick = function(){
+        if(email.value == '') {
+            document.getElementById('errorMessage').innerText = 'Enter your email, please!';
+            return false;
+        }
+        if(password.value == ''){
+            document.getElementById('errorMessage').innerText = 'Enter your password, please!';
+            return false;
+        }
+        localStorage.setItem('email', email.value);
+        return true;
+    }
+</script>
+</body>
+</html>

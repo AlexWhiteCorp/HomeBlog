@@ -1,0 +1,11 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="articleShotInfo(topic, article)" class="articleShotInfo">
+        <div class="articleShotInfoTitle"><a th:href="${topic + '/' + article}"><strong th:include="~{${'articles/' + topic + '/' + article} :: title}">Title</strong></a></div>
+        <div class="articleShotInfoDate" th:include="~{${'articles/' + topic + '/' + article} :: date}">01.01.2019</div>
+        <div class="articleShotInfoContent" th:include="~{${'articles/' + topic + '/' + article} :: shortDescription}">Description</div>
+        <div class="continueReadButtonDiv"><a class="greenButton" th:href="${topic + '/' + article}">Читати далі</a></div>
+    </div>
+</body>
+</html>

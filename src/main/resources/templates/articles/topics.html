@@ -1,0 +1,10 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="plants" class="articlesList row" th:each="number: ${#numbers.sequence(1, 1)}">
+        <div th:replace="~{parts/gui :: articleShotInfo('plants', ${number})}"></div>
+        <div th:replace="~{parts/gui :: articleShotInfo('plants', ${number})}"></div>
+        <div th:replace="~{parts/gui :: articleShotInfo('plants', ${number})}"></div>
+    </div>
+</body>
+</html>

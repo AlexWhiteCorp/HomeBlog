@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="head(title)">
+        <meta charset="UTF-8">
+        <meta name="theme-color" content="#193e19">
+
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+        <meta name="apple-mobile-web-app-capable" content="yes" >
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <base href="/" />
+
+        <script type="text/javascript" src="/scripts/axios.min.js"></script>
+        <script type="text/javascript" src="/scripts/api.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <link rel="shortcut icon" href="/images/logo.png">
+
+        <link rel="stylesheet" type="text/css" href="/styles/style.css">
+        <link rel="stylesheet" type="text/css" href="/styles/gui.css">
+        <link rel="stylesheet" type="text/css" href="/styles/footer.css">
+
+        <title th:text="${title}"></title>
+
+        <script th:inline="javascript">
+            var FeData = {
+                'auth' : [[${session.auth}]],
+                'nickname' : [[${session.nickname}]],
+                'usericon' : [[${session.usericon}]]
+            };
+        </script>
+    </div>
+</body>
+</html>
